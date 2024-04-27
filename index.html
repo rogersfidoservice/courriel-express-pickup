@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulaire d'envoi d'e-mail</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+
+<style>
+  
+  body {
+    background-color: #f6f6f6;
+    margin: auto;
+    text-align: center;
+    font-family : arial;
+    padding: 25px;
+  }
+  
+  h2 {
+    text-transform: uppercase;
+  }
+  
+  h3 {
+    margin-top: 10px;
+  }
+  
+  h4 {
+    margin-top: -10px;
+  }
+  
+  .header {
+    background-color: none;
+  }
+  
+  #header-logo {
+    width: 450px;
+  }
+  
+  .subheader {
+    background-color: none;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  
+  #subheader-logo {
+    width: 300px;
+  }
+  
+  .form-message {
+    margin-bottom: 5px;
+  }
+  
+  .input-container {
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    justify-content: center;
+    width: 100%;
+  }
+  
+    .form-input {
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+    }
+  
+    .form-pasteButton {
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+      margin-left: 10px;
+    }
+  
+  #email {
+    width: 350px;
+    height: 30px;
+    text-align: center;
+    border-radius: 5px;
+    font-size: 16px;
+    border: solid 0px;
+    box-shadow: 0px 0px 10px #c4c4c4;
+    transition-duration: 300ms;
+    transition-property: box-shadow;
+  }
+  
+  #email:hover {
+    box-shadow: 0px 0px 5px #c4c4c4;
+  }
+  
+  #button-send {
+    width: 100px;
+    height: 30px;
+    margin-top: 20px;
+    border-radius: 5px;
+    border: 0px solid;
+    background-color: #da291c;
+    color: white;
+    font-size: 16px;
+    text-transform: uppercase;
+    font-weight: bold;
+    transition-duration: 100ms;
+  }
+  
+  #button-send:hover {
+    cursor: pointer;
+    font-size: 14px;
+    background-color: #E65449;
+  }
+  
+  #paste-button {
+    background-color: #434343; /* Couleur de fond */
+    color: white;
+    width: 30px;
+    height: 30px;
+    border: none; /* Supprimer la bordure */
+    padding: 5px; /* Marge intérieure */
+    cursor: pointer; /* Curseur de souris */
+    border-radius: 5px; /* Coins arrondis */
+    font-size: 18px;
+    transition-duration: 100ms;
+  }
+  
+  #paste-button:hover {
+    background-color: #B1B1B1;
+    font-size: 16px;
+  }
+  
+  .icon-check {
+    font-size: 48px;
+    color: #2DBC6F;
+    margin-bottom: -10px;
+  }
+  
+  .confirmation-message {
+    font-size: 18px;
+  }
+  
+  .bouton-recharger {
+    
+  }
+  
+  #buttonReload {
+    font-size: 18px;
+    width: 230px;
+    height: 30px;
+    border-radius: 5px;
+    transition-duration: 100ms;
+    border: solid 1px #515151;
+  }
+  
+  #buttonReload:hover {
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0px 0px 10px #c9c9c9;
+    border: solid 1px #c9c9c9;
+    
+  }
+  
+</style>
+  
+<body>
+  
+
+
+    <div class="header"> 
+      <img src="https://i.imgur.com/3zCbTwD.png" id="header-logo">
+    </div>
+  
+    <h3>Commande prête pour le ramassage</h3>
+  
+    <div class="subheader"> 
+      <img src="https://i.imgur.com/WWKpEfe.png" id="subheader-logo">
+    </div>
+
+    <div id="formulaireContainer">
+      
+      <form id="monFormulaire">
+        
+        <div class="form-message">
+        
+          <label for="email">Adresse courriel du client</label>
+          
+        </div>  
+        
+        <div class="input-container">
+        
+          <div class="form-input">
+
+            <input type="email" id="email" name="email" required>
+            <!-- Autres champs de formulaire si nécessaire -->
+
+          </div>
+
+          <div class="form-pasteButton">
+
+            <button id="paste-button" type="button" class="paste-button" onclick="collerDepuisPressePapiers()">
+              <i class="far fa-clone"></i>
+            </button>
+
+          </div>
+          
+        </div>
+        
+        <div class="form-button">
+
+          <button id="button-send" type="button" onclick="envoyerFormulaire()">Envoyer</button>
+          
+        </div>  
+       
+        
+      
+    </div>
+
+    <div id="confirmationContainer" style="display: none;">
+        <div class="icon-check"><i class="fas fa-check"></i></div>
+        <div class="confirmation-message"><p>Courriel envoyé avec succès.</p></div>
+        <div class="bouton-recharger"><button id="buttonReload" onclick="afficherFormulaire()">Envoyer un autre courriel</button></div>
+    </div>
+      
+
+
+    <script>
+        function envoyerFormulaire() {
+            // Récupérer les valeurs des champs du formulaire
+            var email = document.getElementById("email").value;
+            // Autres champs de formulaire si nécessaire
+
+            // Créer un objet JSON avec les données du formulaire
+            var formData = {
+                "email": email
+                // Autres champs de formulaire si nécessaire
+            };
+
+            // Envoyer les données au format JSON via une requête HTTP POST
+            fetch('https://prod-27.westus.logic.azure.com:443/workflows/d13ba9991bad4485a2cf67aa815717cb/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=bC1UupHECM7duPWT--WKH02cJkNcS40MbcqbQq8LFOw', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erreur lors de la soumission du formulaire');
+                }
+                // Afficher le message de confirmation et masquer le formulaire
+                document.getElementById("formulaireContainer").style.display = "none";
+                document.getElementById("confirmationContainer").style.display = "block";
+            })
+            .catch(error => {
+                console.error('Erreur:', error);
+            });
+        }
+      
+      function collerDepuisPressePapiers() {
+            // Coller le contenu du presse-papiers dans le champ d'entrée
+            navigator.clipboard.readText().then(function(text) {
+                document.getElementById("email").value = text;
+            });
+        }
+      
+      function afficherFormulaire() {
+            // Masquer la section du message de confirmation et afficher à nouveau la section du formulaire
+            document.getElementById("confirmationContainer").style.display = "none";
+            document.getElementById("formulaireContainer").style.display = "block";
+        }
+
+      
+    </script>
+
+</body>
+</html>
